@@ -1,0 +1,8 @@
+word = 'liwenqiang'
+for k in word:
+    print(k)
+
+print(word[5:7])
+print(word[:])
+print(word.join('dkd'))
+print('h'.join(word))

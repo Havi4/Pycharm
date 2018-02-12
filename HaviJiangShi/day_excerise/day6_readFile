@@ -1,0 +1,9 @@
+# -*- coding: UTF-8 -*-
+
+f = open('data.txt',encoding="utf8")
+readString = f.read()
+f.close()
+
+f = open('write.txt','w',encoding="utf8")
+f.write(readString)
+f.close()

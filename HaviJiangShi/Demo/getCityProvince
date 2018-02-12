@@ -1,0 +1,40 @@
+import urllib.request
+import urllib3
+
+url = 'http://m.weather.com.cn/data3/city.xml'
+provinceData = urllib.request.urlopen(url).read()
+provinceString = str(provinceData, encoding='utf-8')
+provinces = provinceString.split(',')
+backResult = 'city = {\n'
+print('Privinces: %s' %provinces)
+
+cityUrl = 'http://m.weather.com.cn/data3/city%s.xml'
+for p in provinces[:3]:
+    p_code = p.split('|')[0]
+    url2 = cityUrl % p_code
+    cityData = urllib.request.urlopen(url2).read()
+    cityString = str(cityData, encoding='utf-8')
+    cities = cityString.split(',')
+    print('Cities: %s' %cities)
+    for c in cities[:3]:
+        c_code = c.split('|')[0]
+        url3 = cityUrl % c_code
+        cityData1 = urllib.request.urlopen(url3).read()
+        cityString1 = str(cityData1, encoding='utf-8')
+        districts = cityString1.split(',')
+        print('Districts: %s' %districts)
+        for d in districts:
+            d_pair = d.split('|')
+            d_code = d_pair[0]
+            name = d_pair[1]
+            url4 = cityUrl % d_code
+            cityData2 = urllib.request.urlopen(url4).read()
+            cityString2 = str(cityData2, encoding='utf-8')
+            code = cityString2.split('|')[1]
+            line = " '%s':'%s',\n" %(name, code)
+            backResult += line
+
+backResult += '}'
+fileManager = open('getCity.py', 'w', encoding='utf-8')
+fileManager.write(backResult)
+fileManager.close()

@@ -1,0 +1,18 @@
+import random
+print('猜测下我心里的想法')
+temp = input("我心里的想要的数字:")
+guess = int(temp)
+secret = random.randint(1,10)
+a = 0
+while guess != secret and a < 3:
+    temp = input("please input again:")
+    guess = int(temp)
+    if guess == secret:
+        print("all right")
+    else:
+        if guess > secret:
+            print('you value is big than result')
+        elif guess < secret:
+            print('you value is litter than result')
+    a= a+1
+print('shit')

@@ -1,0 +1,4 @@
+a = 'heave'
+b = 'hello'
+c = True and a or b
+print(c)

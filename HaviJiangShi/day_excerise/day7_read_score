@@ -1,0 +1,15 @@
+fileManager = open('scores.txt',encoding='utf-8')
+lines = fileManager.readlines()
+fileManager.close()
+print(lines)
+results = []
+for line in lines:
+    data = line.split()
+    sum = 0
+    for score in data[1:]:
+        sum += int(score)
+    result = '%s\t: %d\n' %(data[0], sum)
+    results.append(result)
+outPut = open('output.txt','w', encoding='utf-8')
+outPut.writelines(results)
+outPut.close()
