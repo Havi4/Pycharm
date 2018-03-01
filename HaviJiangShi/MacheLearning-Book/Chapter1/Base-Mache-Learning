@@ -1,0 +1,51 @@
+import kNN
+import numpy as np
+import operator
+
+groups, labels = kNN.create_dataset()
+
+print("group and labels %s and %s" %(str(groups), str(labels)))
+
+def classify0(inX, dataset, labels, k):
+    '''
+
+    :param inX:
+    :param dataset:
+    :param labels:
+    :param k:
+    :return:
+    '''
+    #caculate train dataset size
+    datasetsize = dataset.shape[0]
+    '''
+    [[1,2],
+    [2,3],
+    [3,4]
+    ]
+    diffmat：将inX矩阵在垂直放心重复扩展datasiz在进行减法。为后面的计算距离做准备
+    '''
+    diffMat = np.tile(inX, (datasetsize, 1)) - dataset
+    print("distance for all " + str(diffMat))
+
+    sqDiffMat = diffMat**2
+    sqDistance = sqDiffMat.sum(axis=1)
+    distance = sqDistance**0.5
+    sorteddisIndices = distance.argsort()
+
+    classCount = {}
+
+    for i in range(k):
+        votelabeli = labels[sorteddisIndices[i]]
+        classCount[votelabeli] = classCount.get(votelabeli, 0) + 1
+
+    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
+    return sortedClassCount[0][0]
+
+#classify
+
+result = classify0([0.1, 0.2], groups, labels, 1)
+print("the regression result is " + result)
+
+
+
+
